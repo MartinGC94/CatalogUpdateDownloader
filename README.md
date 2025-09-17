@@ -1,13 +1,14 @@
 # CatalogUpdateDownloader
 This PowerShell module allows you to find and download updates from https://www.catalog.update.microsoft.com  
-It uses https://html-agility-pack.net/ to parse the update search results page retrieved with `Invoke-WebRequest`.
+It uses [Html Agility Pack](https://html-agility-pack.net) to parse the update search results page retrieved with `Invoke-WebRequest`.
 
 # Getting started
 Install the module from the PowerShell gallery: `Install-Module CatalogUpdateDownloader`  
 Then check the available commands in the module: `Get-Command -Module CatalogUpdateDownloader`  
 Here's a few example of what can be done with this module:
+
+### Find and download the latest cumulative OS and .NET updates for Windows server 2025
 ```powershell
-# Find and download the latest cumulative OS and .NET updates for Windows server 2025
 $CommonParams = @{
     OperatingSystem = 'WindowsServer'
     OsVersion       = "24H2"
@@ -20,11 +21,12 @@ $CommonParams = @{
     Find-CatalogUpdate -UpdateKind CumulativeOS @CommonParams
     Find-CatalogUpdate -UpdateKind CumulativeNET @CommonParams
 ) | Save-CatalogUpdate -OutputDirectory $HOME\Downloads -PrimaryOnly
-
-# Use a custom search query to find updates
-# Note the use of quotes, +, and -
-# + and - are used to include/exclude updates that matches the specified phrases
-# Quotes are used to encapsulate each phrase
+```
+### Use a custom search query to find updates  
+Note the use of quotes, `+`, and `-`.  
+`+` and `-` are used to include/exclude updates that matches the specified phrases.  
+Quotes are used to encapsulate each phrase.
+```powershell
 PS C:\> Find-CatalogUpdate -SearchText '"2025-08"+"Windows 11"+"24H2"-"Dynamic"'
 
 Title          : 2025-08 Cumulative Update Preview for .NET Framework 3.5 and 4.8.1 for Windows 11, version 24H2 for arm64 (KB5064401)
@@ -38,8 +40,9 @@ Title          : 2025-08 Cumulative Update Preview for .NET Framework 3.5 and 4.
 ReleaseDate    : 29-08-2025 00:00:00
 Size           : 71.58 MB
 ...
-
-# Use a custom search query to find device drivers based on the hardware ID
+```
+### Use a custom search query to find device drivers based on the hardware ID
+```powershell
 PS C:\> $DisplayHwId = (Get-PnpDevice -Class Display)[0].HardwareID[1]
 Find-CatalogUpdate -SearchText $DisplayHwId -First 1
 
@@ -49,8 +52,10 @@ Size           : 1.01 GB
 Classification : Drivers (Video)
 Products       : Windows 10 version 1803 and Later Servicing Drivers, Windows 10 Version 1803 and Later Upgrade   & Servicing Drivers
 UpdateId       : d80f8070-617f-4a7c-a38c-69b9ff63811c
+```
 
-# Find and list download info for an update
+### Find and list download info for an update
+```powershell
 PS C:\> Find-CatalogUpdate -UpdateKind MSRT -OperatingSystem Windows11 -SortBy Date -Descending -First 1 | Get-CatalogUpdateDownloadInfo
 
 Title        : Windows Malicious Software Removal Tool - v5.135 (KB890830)
