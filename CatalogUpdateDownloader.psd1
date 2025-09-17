@@ -17,7 +17,7 @@
     FileList               = 'CatalogUpdateDownloader.psm1', 'CatalogUpdateDownloader.psd1', 'CatalogUpdateDownloaderFormat.ps1xml', 'HtmlAgilityPack.dll'
     PrivateData            = @{
         PSData = @{
-             Tags         = @("WU", "Update", "Windows Update", "Update catalog")
+             Tags         = @("WU", "Update", "WindowsUpdate", "Updatecatalog")
              ProjectUri   = 'https://github.com/MartinGC94/CatalogUpdateDownloader'
              ReleaseNotes = @'
 1.0.0:
